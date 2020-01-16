@@ -1,0 +1,77 @@
+onvif_ptz_move:
+  description: "Pan/Tilt/Zoom service for ONVIF camera."
+  fields:
+    entity_id:
+      description: "Name(s) of entities to pan, tilt or zoom."
+      example: "camera.living_room_camera"
+    move_mode:
+      description: "PTZ moving mode. ContinuousMode and Stop are mandatory if PTZ is supported, RelativeMove and AbsoluteMove are optionals implementations so depending of manufactors willing. Allowed values: ContinuousMode, Stop, RelativeMove, AbsoluteMove"
+      default: "ContinuousMove"
+      example: "RelativeMove"
+    tilt:
+      description: "Tilt direction. Allowed values: UP, DOWN, NONE"
+      example: "UP"
+    pan:
+      description: "Pan direction. Allowed values: RIGHT, LEFT, NONE"
+      example: "RIGHT"
+    zoom:
+      description: "Zoom. Allowed values: ZOOM_IN, ZOOM_OUT, NONE"
+      example: "NONE"
+    distance:
+      description: "Distance coefficient. Sets how much PTZ should be executed in one request. Allowed values: floating point numbers, 0 to 1"
+      default: 0.1
+      example: 0.1
+    speed:
+      description: "Speed coefficient. Sets how fast PTZ will be executed. Allowed values: floating point numbers, 0 to 1"
+      default: 0.5
+      example: 0.5
+    continuous_timeout:
+      description: "Set ContinuousMove delay in seconds before stoping the move. null value will do full pan/tilt. Allowed values: floating point numbers, 0 to 1, null"
+      default: null
+      example: 0.5
+
+onvif_ptz_advanced_move:
+  description: "Pan/Tilt/Zoom service for ONVIF camera using vector, For advanced users, please use any Onvif Device Manager softer/lib to obtain your vector ranges"
+  fields:
+    entity_id:
+      description: "Name(s) of entities to pan, tilt or zoom."
+      example: "camera.living_room_camera"
+    move_mode:
+      description: "PTZ moving mode. ContinuousMode and Stop are mandatory if PTZ is supported, RelativeMove and AbsoluteMove are optionals implementations so depending of manufactors willing. Allowed values: ContinuousMode, Stop, RelativeMove, AbsoluteMove"
+      default: "ContinuousMove"
+      example: "RelativeMove"
+    ptz_vector:
+      description: "Position, translation or velocity vector [pan,tilt,zoom] according to move_mode. Allowed values: floating point numbers [pan,tilt,zoom]"
+      default: [0, 0, 0]
+      example: [-1.0, 1.0, 0]
+    speed_vector:
+      description: "Speed for RelativeMove and AbsoluteMove modes only. Sets how fast PTZ will be executed. Allowed values: floating point numbers [pan,tilt,zoom]"
+      default: [1.0, 1.0, 1.0]
+      example: [0.5, 0.5, 0.5]
+    continuous_timeout:
+      description: "Set ContinuousMove delay in seconds before stoping the move. 0 value will do full pan/tilt. Allowed values: floating point numbers, 0 to 1, null"
+      default: 0.5
+      example: 0.5
+
+onvif_ptz_preset:
+  description: "If your ONVIF camera supports PTZ presets and/or Homing, you will be able move your cameras to presets / Home positions"
+  fields:
+    entity_id:
+      description: "Name(s) of entities to do preset operation."
+      example: "camera.living_room_camera"
+    preset_operation:
+      description: "preset PTZ operation to call, depending of what your camera supports. Allowed values: GetPresets, SetPreset, GotoPreset, GotoHomePosition, SetHomePosition"
+      example: GotoHomePosition
+    preset_name:
+      description: "Set it with PresetToken in SetPreset operation to save your camera position in a preset(onvif camera built-in memory) Allowed values: not too long string with allowed chars [A-Za-z0-9]"
+      example: MainFrontDoor
+    preset_token:
+      description: "Set it with PresetName in SetPreset operation to save a preset of your actual camera position. Allowed values: not too long string with allowed chars [a-z0-9], PresetToken must be an existing previously saved token"
+      example: door1
+
+onvif_cmd_reboot:
+  description: Reboot your device if your ONVIF camera supports it
+  fields:
+    entity_id:
+      description: "Name(s) of entities to do preset operation."
+      example: "camera.living_room_camera"
