@@ -1,4 +1,4 @@
-# onvif2 Component for Home Assistant
+# New ONVIF Component for Home Assistant
 
 Adding support for other PTZ move modes, presets, homing and reboot
 
