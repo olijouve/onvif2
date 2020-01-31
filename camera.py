@@ -550,6 +550,11 @@ class ONVIFHassCamera(Camera):
                         req.ProfileToken = self._profile_token
                         await self._ptz_service.Stop(req)
 
+                elif move_mode == STOP_MOVE:
+                    req = self._ptz_service.create_type("Stop")
+                    req.ProfileToken = self._profile_token
+                    await self._ptz_service.Stop(req)
+
                 elif move_mode == RELATIVE_MOVE:
                     req.Translation = {
                         "PanTilt": {"x": pan_val, "y": tilt_val},
