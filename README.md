@@ -29,7 +29,7 @@ Sample config:
     continuous_timeout_compliance: False
 ```
 
-New parameters explaintation:
+New parameters explaination:
 
 `rtsp_transport: "RTSP"` RTSP should fit most cases, also some cameras could support UDP or HTTP transport.
 
