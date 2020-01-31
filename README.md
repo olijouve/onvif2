@@ -16,4 +16,21 @@ Adding support for other PTZ move modes, presets, homing and reboot
 - move services descrition in dedicated onvif/services.yaml ; comment addressed by @MartinHjelmare in PR 30152
 - use dict[key] for required schema keys and keys with default schema values ; comment addressed by @MartinHjelmare in PR 30152
 
+Sample config:
 
+```
+  - platform: onvif
+    host: 192.168.1.x
+    port: 80
+    name: besder
+    profile: 0 
+    username: !secret besder_username
+    rtsp_transport: "RTSP"
+    continuous_timeout_compliance: False
+```
+
+New parameters explaintation:
+
+`rtsp_transport: "RTSP"` RTSP should fit most cases, also some cameras could support UDP or HTTP transport.
+
+`continuous_timeout_compliance: False` Set it to False if your camera cannot handle embed Timeout in ContinousMove operation,  the component will force a Stop move operation after a sleep emulated timeout.
