@@ -129,10 +129,10 @@ SERVICE_PTZ_ADVANCED_MOVE_SCHEMA = vol.Schema(
             [CONTINUOUS_MOVE, RELATIVE_MOVE, ABSOLUTE_MOVE, STOP_MOVE]
         ),
         vol.Required(ATTR_PTZ_VECTOR): vol.All(
-            vol.ExactSequence((cv.small_float, cv.small_float, cv.small_float)), vol.Coerce(tuple)
+            vol.ExactSequence((cv.string, cv.string, cv.string)), vol.Coerce(tuple)
         ),
-        vol.Optional(ATTR_SPEED_VECTOR, default=(1.0, 1.0, 1.0)): vol.All(
-            vol.ExactSequence((cv.small_float, cv.small_float, cv.small_float)), vol.Coerce(tuple)
+        vol.Optional(ATTR_SPEED_VECTOR, default=("1.0", "1.0", "1.0")): vol.All(
+            vol.ExactSequence((cv.string, cv.string, cv.string)), vol.Coerce(tuple)
         ),
         vol.Optional(ATTR_CONTINUOUS_DURATION, default=0): cv.small_float
     }
@@ -512,6 +512,7 @@ class ONVIFHassCamera(Camera):
         self, ptz_vector, speed_vector, move_mode, continuous_timeout, timeout_compliance
     ):
         """Perform a PTZ action on the camera."""
+        _LOGGER.debug("async_perform_ptz_advanced_move")
         if self._ptz_service is None:
             _LOGGER.warning(
                 "PTZ Move actions are not supported on camera '%s'", self._name
@@ -519,16 +520,16 @@ class ONVIFHassCamera(Camera):
             return
 
         if self._ptz_service:
-            pan_val = ptz_vector[0]
-            tilt_val = ptz_vector[1]
-            zoom_val = ptz_vector[2]
+            pan_val = float(ptz_vector[0])
+            tilt_val = float(ptz_vector[1])
+            zoom_val = float(ptz_vector[2])
             _LOGGER.debug(
                 "Calling %s PTZ Move on camera '%s'| Pan = %4.2f | Tilt = %4.2f | Zoom = %4.2f | Speed = %s | Timeout = %1.1f",
                 move_mode,
                 self._name,
-                ptz_vector[0],
-                ptz_vector[1],
-                ptz_vector[2],
+                pan_val,
+                tilt_val,
+                zoom_val,
                 speed_vector,
                 continuous_timeout
             )
@@ -561,8 +562,8 @@ class ONVIFHassCamera(Camera):
                         "Zoom": {"x": zoom_val},
                     }
                     req.Speed = {
-                        "PanTilt": {"x": speed_vector[0], "y": speed_vector[1]},
-                        "Zoom": {"x": speed_vector[2]},
+                        "PanTilt": {"x": float(speed_vector[0]), "y": float(speed_vector[1])},
+                        "Zoom": {"x": float(speed_vector[2])},
                     }
                     await self._ptz_service.RelativeMove(req)
 
@@ -572,8 +573,8 @@ class ONVIFHassCamera(Camera):
                         "Zoom": {"x": zoom_val},
                     }
                     req.Speed = {
-                        "PanTilt": {"x": speed_vector[0], "y": speed_vector[1]},
-                        "Zoom": {"x": speed_vector[2]},
+                        "PanTilt": {"x": float(speed_vector[0]), "y": float(speed_vector[1])},
+                        "Zoom": {"x": float(speed_vector[2])},
                     }
                     await self._ptz_service.AbsoluteMove(req)
 
