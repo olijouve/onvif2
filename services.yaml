@@ -41,7 +41,7 @@ onvif_ptz_advanced_move:
       default: "ContinuousMove"
       example: "RelativeMove"
     ptz_vector:
-      description: "Position, translation or velocity vector [pan,tilt,zoom] according to move_mode. Allowed values: Strings representing floating point numbers ['pan','tilt','zoom']"
+      description: "Position, translation or velocity vector ['pan','tilt','zoom'] according to move_mode. Allowed values: Strings representing floating point numbers ['pan','tilt','zoom']"
       default: ['0', '0', '0']
       example: ['-1.0', '1.0', '0']
     speed_vector:
