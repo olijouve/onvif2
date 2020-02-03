@@ -41,13 +41,13 @@ onvif_ptz_advanced_move:
       default: "ContinuousMove"
       example: "RelativeMove"
     ptz_vector:
-      description: "Position, translation or velocity vector [pan,tilt,zoom] according to move_mode. Allowed values: floating point numbers [pan,tilt,zoom]"
-      default: [0, 0, 0]
-      example: [-1.0, 1.0, 0]
+      description: "Position, translation or velocity vector [pan,tilt,zoom] according to move_mode. Allowed values: Strings representing floating point numbers ['pan','tilt','zoom']"
+      default: ['0', '0', '0']
+      example: ['-1.0', '1.0', '0']
     speed_vector:
-      description: "Speed for RelativeMove and AbsoluteMove modes only. Sets how fast PTZ will be executed. Allowed values: floating point numbers [pan,tilt,zoom]"
-      default: [1.0, 1.0, 1.0]
-      example: [0.5, 0.5, 0.5]
+      description: "Speed for RelativeMove and AbsoluteMove modes only. Sets how fast PTZ will be executed. Allowed values: String representing floating point numbers ['pan','tilt','zoom']"
+      default: ['1.0', '1.0', '1.0']
+      example: ['0.5', '0.5', '0.5']
     continuous_timeout:
       description: "Set ContinuousMove delay in seconds before stoping the move. 0 value will do full pan/tilt. Allowed values: floating point numbers, 0 to 1, null"
       default: 0.5
